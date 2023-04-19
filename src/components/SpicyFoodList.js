@@ -24,20 +24,23 @@ function SpicyFoodList() {
     setFoods(newFoodArray);
   }
 
-  function handleFilterChange(event) {
-    setFilterBy(event.target.value);
-  }
+  const foodsToDisplay = foods.filter((food) => {
+    if (filterBy === "All") {
+      return true;
+    } else {
+      return food.cuisine === filterBy;
+    }
+  });
 
-  let filteredFoods = foods;
-  if (filterBy !== "All") {
-    filteredFoods = foods.filter((food) => food.cuisine === filterBy);
-  }
-
-  const foodList = filteredFoods.map((food) => (
+  const foodList = foodsToDisplay.map((food) => (
     <li key={food.id} onClick={() => handleLiClick(food.id)}>
       {food.name} | Heat: {food.heatLevel} | Cuisine: {food.cuisine}
     </li>
   ));
+
+  function handleFilterChange(event) {
+    setFilterBy(event.target.value);
+  }
 
   return (
     <div>
